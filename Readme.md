@@ -6,8 +6,8 @@
 
 ## Технологии
 
-* сервис написан на Go с использованием Go Modules
-* предоставляет API через [gRPC](https://grpc.io/docs/languages/go/quickstart/)
-* предоставляет API через HTTP с помощью [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway)
-* предоставляет Swagger UI с документацией, сгенерированной из .proto файла с помощью protoc-gen-swagger
-* упакован в docker контейнер
+* [ ] сервис написан на Go с использованием Go Modules
+* [ ] предоставляет API через [gRPC](https://grpc.io/docs/languages/go/quickstart/)
+* [ ] предоставляет API через HTTP с помощью [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway)
+* [ ] предоставляет Swagger UI с документацией, сгенерированной из .proto файла с помощью protoc-gen-swagger
+* [ ] упакован в docker контейнер
