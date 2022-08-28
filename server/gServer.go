@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "awesomeNET/gen/proto"
+	pb "awesomeNET/gen"
 	"context"
 	. "fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
