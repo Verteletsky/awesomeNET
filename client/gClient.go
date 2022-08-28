@@ -1,7 +1,7 @@
 package main
 
 import (
-	profilepb "awesomeNET/proto"
+	pb "awesomeNET/gen/proto"
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
@@ -15,12 +15,12 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := profilepb.NewRusProfileServiceClient(conn)
+	client := pb.NewRusProfileServiceClient(conn)
 
-	request := &profilepb.GetInfoRequest{
+	request := &pb.GetInfoRequest{
 		Inn: "7716536701",
 	}
-	
+
 	response, err := client.GetInfo(context.Background(), request)
 	if err != nil {
 		grpclog.Fatal(err)

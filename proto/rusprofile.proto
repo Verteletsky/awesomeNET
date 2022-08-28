@@ -2,18 +2,16 @@ syntax = "proto3";
 
 package russervice;
 
-option go_package = "proto/";
+option go_package = "./proto/";
 
-//import "google/api/annotations.proto";
+import "google/api/annotations.proto";
 
-/*
+service RusProfileService {
+  rpc GetInfo(GetInfoRequest) returns (InfoResponse) {
     option (google.api.http) = {
       get: "/get/{inn}"
     };
- */
-
-service RusProfileService {
-  rpc GetInfo(GetInfoRequest) returns (InfoResponse) {}
+  }
 }
 
 message GetInfoRequest {

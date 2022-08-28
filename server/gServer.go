@@ -1,24 +1,26 @@
 package main
 
 import (
-	profilepb "awesomeNET/proto"
+	pb "awesomeNET/gen/proto"
 	"context"
 	. "fmt"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"net/http"
 )
 
 const LINK = "https://www.rusprofile.ru/ajax.php?query=7716536701&action=search&cacheKey=%.12f"
 
 type server struct {
-	profilepb.UnimplementedRusProfileServiceServer
+	pb.UnimplementedRusProfileServiceServer
 }
 
-func (s *server) GetInfo(ctx context.Context, request *profilepb.GetInfoRequest) (*profilepb.InfoResponse, error) {
+func (s *server) GetInfo(ctx context.Context, request *pb.GetInfoRequest) (*pb.InfoResponse, error) {
 	Println(request.Inn)
 	Println(request.GetInn())
-	return &profilepb.InfoResponse{
+	return &pb.InfoResponse{
 		Inn:     request.Inn,
 		Kpp:     request.GetInn(),
 		Name:    "OOO MYCOMPANI22222",
@@ -31,6 +33,17 @@ func main() {
 }
 
 func startGRPC() {
+	go func() {
+		// mux
+		mux := runtime.NewServeMux()
+
+		// register
+		pb.RegisterRusProfileServiceHandlerServer(context.Background(), mux, &server{})
+
+		// http server
+		log.Fatalln(http.ListenAndServe("localhost:8081", mux))
+	}()
+
 	list, err := net.Listen("tcp", ":8090")
 	if err != nil {
 		log.Fatal(err)
@@ -39,7 +52,7 @@ func startGRPC() {
 	Println("Product Svc on", list.Addr().String())
 
 	s := grpc.NewServer()
-	profilepb.RegisterRusProfileServiceServer(s, &server{})
+	pb.RegisterRusProfileServiceServer(s, &server{})
 	if err = s.Serve(list); err != nil {
 		log.Fatalln(err)
 	}
