@@ -12,5 +12,6 @@ plugins:
     out: ../gen
     opt:
       - paths=source_relative
+      - generate_unbound_methods=true
   - name: openapiv2
     out: ../gen

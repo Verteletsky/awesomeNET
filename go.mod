@@ -3,6 +3,7 @@ module awesomeNET
 go 1.19
 
 require (
+	github.com/flowchartsman/swaggerui v0.0.0-20210303154956-0e71c297862e
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3
 	google.golang.org/genproto v0.0.0-20220822174746-9e6da59bd2fc
 	google.golang.org/grpc v1.48.0

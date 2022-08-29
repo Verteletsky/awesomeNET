@@ -4,9 +4,11 @@ import (
 	pb "awesomeNET/gen"
 	"awesomeNET/models"
 	"context"
+	_ "embed"
 	"encoding/json"
 	"errors"
 	. "fmt"
+	"github.com/flowchartsman/swaggerui"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"log"
@@ -66,6 +68,9 @@ func (s *server) GetInfo(ctx context.Context, request *pb.GetInfoRequest) (*pb.I
 	}
 }
 
+//go:embed ..\gen\rusprofile.swagger.json
+var spec []byte
+
 func main() {
 	startGRPC()
 }
@@ -80,6 +85,7 @@ func startGRPC() {
 
 		muxHttp := http.NewServeMux()
 		muxHttp.Handle("/get/", serveMux)
+		muxHttp.Handle("/swagger/", http.StripPrefix("/swagger", swaggerui.Handler(spec)))
 
 		// http server
 		log.Fatalln(http.ListenAndServe("localhost:8081", muxHttp))
