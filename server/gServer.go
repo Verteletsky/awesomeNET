@@ -40,11 +40,7 @@ func (s *server) GetInfo(ctx context.Context, request *pb.GetInfoRequest) (*pb.I
 	}
 
 	if v.Success == false {
-		if v.Code == 255 {
-			return nil, errors.New(v.Message)
-		} else {
-			return nil, errors.New(v.Message)
-		}
+		return nil, errors.New(v.Message)
 	}
 
 	if v.Count == 0 {
