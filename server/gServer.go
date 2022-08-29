@@ -43,18 +43,27 @@ func (s *server) GetInfo(ctx context.Context, request *pb.GetInfoRequest) (*pb.I
 		return nil, errors.New(v.Message)
 	}
 
-	if v.Count == 0 {
+	if v.UlCount >= 1 {
+		v.ProfileUl[0].Inn = strings.Trim(v.ProfileUl[0].Inn, "~!")
+
+		return &pb.InfoResponse{
+			Inn:     v.ProfileUl[0].Inn,
+			Kpp:     v.ProfileUl[0].Kpp,
+			Name:    v.ProfileUl[0].Name,
+			CeoName: v.ProfileUl[0].CeoName,
+		}, nil
+	} else if v.IpCount >= 1 {
+		v.ProfileIp[0].Inn = strings.Trim(v.ProfileIp[0].Inn, "~!")
+
+		return &pb.InfoResponse{
+			Inn:     v.ProfileIp[0].Inn,
+			Kpp:     v.ProfileIp[0].KppIP,
+			Name:    v.ProfileIp[0].Name,
+			CeoName: v.ProfileIp[0].CeoName,
+		}, nil
+	} else {
 		return nil, errors.New("компания не найдена")
 	}
-
-	v.Profile[0].Inn = strings.Trim(v.Profile[0].Inn, "~!")
-
-	return &pb.InfoResponse{
-		Inn:     v.Profile[0].Inn,
-		Kpp:     v.Profile[0].Kpp,
-		Name:    v.Profile[0].Name,
-		CeoName: v.Profile[0].CeoName,
-	}, nil
 }
 
 func main() {
